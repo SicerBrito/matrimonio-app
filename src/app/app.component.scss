@@ -1,0 +1,65 @@
+.wedding-app {
+    min-height: 100vh;
+    background-color: #f8f8f8;
+    background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 25%, transparent 25%),
+        linear-gradient(225deg, rgba(255, 255, 255, 0.5) 25%, transparent 25%),
+        linear-gradient(45deg, rgba(255, 255, 255, 0.5) 25%, transparent 25%),
+        linear-gradient(315deg, rgba(255, 255, 255, 0.5) 25%, transparent 25%);
+    background-size: 30px 30px;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.app-footer {
+    margin-top: 40px;
+    text-align: center;
+    color: #888;
+    padding: 20px 0;
+
+    p {
+        margin-bottom: 10px;
+    }
+
+    .hearts {
+        span {
+            color: #d48166;
+            margin: 0 5px;
+            font-size: 20px;
+            display: inline-block;
+            animation: beat 1.5s infinite alternate;
+
+            &:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+
+            &:nth-child(3) {
+                animation-delay: 0.4s;
+            }
+        }
+    }
+}
+
+@keyframes beat {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.2);
+    }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .wedding-app {
+        padding: 20px 15px;
+    }
+}

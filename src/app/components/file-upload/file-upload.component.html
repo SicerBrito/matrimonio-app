@@ -1,0 +1,65 @@
+<div class="upload-container">
+    <header class="wedding-header">
+        <h1>Comparte tus momentos</h1>
+        <p>Sube tus fotos y videos de esta celebración especial</p>
+    </header>
+
+    <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" class="upload-form">
+        <!-- Nombre del invitado -->
+        <div class="form-group">
+            <label for="guestName">Tu nombre</label>
+            <input type="text" id="guestName" formControlName="guestName" placeholder="Escribe tu nombre"
+                class="form-control">
+            <div *ngIf="uploadForm.get('guestName')?.invalid && uploadForm.get('guestName')?.touched"
+                class="error-message">
+                Por favor, escribe tu nombre
+            </div>
+        </div>
+
+        <!-- Selector de archivo -->
+        <div class="form-group file-input-container">
+            <label for="file" class="file-input-label">
+                <span *ngIf="!selectedFile">Selecciona una foto o video</span>
+                <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
+            </label>
+            <input type="file" id="file" (change)="onFileSelected($event)" accept=".jpg,.jpeg,.png,.mp4,.mov"
+                class="file-input" #fileInput>
+        </div>
+
+        <!-- Previsualización del archivo -->
+        <div *ngIf="previewUrl" class="preview-container">
+            <img *ngIf="!isVideo" [src]="previewUrl" alt="Preview" class="file-preview">
+            <video *ngIf="isVideo" [src]="previewUrl" controls class="file-preview"></video>
+        </div>
+
+        <!-- Mensajes de error -->
+        <div *ngIf="uploadError" class="error-message">
+            {{ uploadError }}
+        </div>
+
+        <!-- Progreso de carga -->
+        <div *ngIf="isUploading" class="progress-container">
+            <div class="progress-bar" [style.width.%]="uploadProgress">
+                {{ uploadProgress }}%
+            </div>
+        </div>
+
+        <!-- Mensaje de éxito -->
+        <div *ngIf="uploadSuccess" class="success-message">
+            <span class="success-icon">✓</span>
+            ¡Archivo subido con éxito! Gracias por compartirlo.
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="button-container">
+            <button type="submit" class="submit-button" [disabled]="uploadForm.invalid || !selectedFile || isUploading">
+                <span *ngIf="!isUploading">Subir archivo</span>
+                <span *ngIf="isUploading">Subiendo...</span>
+            </button>
+
+            <button type="button" class="reset-button" (click)="resetForm()" [disabled]="isUploading">
+                Cancelar
+            </button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,191 @@
+:host {
+    display: block;
+}
+
+.upload-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.wedding-header {
+    text-align: center;
+    margin-bottom: 30px;
+
+    h1 {
+        color: #d48166;
+        font-size: 28px;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    p {
+        color: #777;
+        font-size: 16px;
+    }
+}
+
+.upload-form {
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #555;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+
+        &:focus {
+            outline: none;
+            border-color: #d48166;
+            box-shadow: 0 0 0 2px rgba(212, 129, 102, 0.2);
+        }
+    }
+
+    .file-input-container {
+        position: relative;
+    }
+
+    .file-input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+    }
+
+    .file-input-label {
+        display: block;
+        padding: 12px 15px;
+        background-color: #f9f9f9;
+        border: 2px dashed #ccc;
+        border-radius: 6px;
+        text-align: center;
+        cursor: pointer;
+        color: #666;
+        transition: all 0.2s ease;
+
+        &:hover {
+            border-color: #d48166;
+            color: #d48166;
+        }
+    }
+
+    .preview-container {
+        margin: 20px 0;
+        text-align: center;
+
+        .file-preview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 6px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    .error-message {
+        color: #d9534f;
+        font-size: 14px;
+        margin-top: 5px;
+        padding: 10px;
+        background-color: rgba(217, 83, 79, 0.1);
+        border-radius: 4px;
+    }
+
+    .success-message {
+        display: flex;
+        align-items: center;
+        color: #5cb85c;
+        font-size: 16px;
+        margin: 15px 0;
+        padding: 15px;
+        background-color: rgba(92, 184, 92, 0.1);
+        border-radius: 6px;
+
+        .success-icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+            background-color: #5cb85c;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+        }
+    }
+
+    .progress-container {
+        height: 8px;
+        background-color: #f0f0f0;
+        border-radius: 4px;
+        margin: 15px 0;
+        overflow: hidden;
+
+        .progress-bar {
+            height: 100%;
+            background-color: #d48166;
+            color: white;
+            text-align: center;
+            line-height: 8px;
+            font-size: 10px;
+            transition: width 0.3s ease;
+        }
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .submit-button,
+    .reset-button {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    }
+
+    .submit-button {
+        background-color: #d48166;
+        color: white;
+
+        &:hover:not(:disabled) {
+            background-color: darken(#d48166, 10%);
+        }
+    }
+
+    .reset-button {
+        background-color: #f8f9fa;
+        color: #555;
+        border: 1px solid #ddd;
+
+        &:hover:not(:disabled) {
+            background-color: #e9ecef;
+        }
+    }
+}

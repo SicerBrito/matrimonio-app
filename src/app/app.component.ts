@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'matrimonio-app';
+  title = 'Matrimonio App - Comparte tus fotos y videos';
 }
