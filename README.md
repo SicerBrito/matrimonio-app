@@ -1,27 +1,68 @@
-# MatrimonioApp
+# Aplicación para Evento de Matrimonio
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.2.
+Esta aplicación web permitirá a los invitados de tu evento de matrimonio subir fotos y videos mediante un código QR colocado en las mesas.
 
-## Development server
+## Características
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4800/`. The application will automatically reload if you change any of the source files.
+- Construida con Angular 18
+- Subida de archivos directa a Bunny.net Storage 
+- Soporte para imágenes (.jpg, .png) y videos (.mp4, .mov)
+- Validación de archivos (tamaño máximo de 1 GB)
+- Previsualización de archivos
+- Guardado de metadatos de los archivos (localmente o en Firestore)
+- Despliegue fácil con Firebase Hosting
+- Generación de códigos QR para compartir
 
-## Code scaffolding
+## Tecnologías Utilizadas
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Angular 18
+- Bunny.net Storage API
+- Firebase Hosting
+- Firestore (opcional)
+- QR Code Generator
 
-## Build
+## Estructura del Proyecto
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```
+matrimonio-app/
+├── src/
+│   ├── app/
+│   │   ├── components/
+│   │   │   └── file-upload/
+│   │   ├── services/
+│   │   ├── models/
+│   │   └── ...
+│   ├── environments/
+│   ├── assets/
+│   └── ...
+├── scripts/
+│   └── generate-qr.js
+├── firebase.json
+├── .firebaserc
+└── ...
+```
 
-## Running unit tests
+## Instrucciones de Uso
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1. Configura el entorno con tus credenciales de Bunny.net y Firebase
+2. Construye la aplicación usando `ng build --configuration production`
+3. Despliega en Firebase con `firebase deploy`
+4. Genera los códigos QR con `node scripts/generate-qr.js`
+5. Imprime los códigos QR y colócalos en las mesas
 
-## Running end-to-end tests
+Para instrucciones detalladas, consulta [DEPLOYMENT.md](./DEPLOYMENT.md).
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Personalización
 
-## Further help
+Puedes personalizar fácilmente:
+- Colores y estilos de la aplicación (archivos SCSS)
+- Mensajes y textos (archivos HTML)
+- Límites de tamaño y tipos de archivos permitidos
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Contribuciones
+
+Este proyecto fue creado específicamente para eventos de matrimonio, pero puedes adaptarlo para cualquier tipo de evento donde se necesite recolectar archivos multimedia de los invitados.
+
+## Licencia
+
+MIT
