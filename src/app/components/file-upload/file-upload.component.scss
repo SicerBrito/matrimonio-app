@@ -28,6 +28,22 @@
     }
 }
 
+.app-footer {
+    display: none;
+}
+
+@keyframes beat {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.2);
+    }
+}
+
+
+
 .upload-form {
     .form-group {
         margin-bottom: 20px;
@@ -186,6 +202,259 @@
 
         &:hover:not(:disabled) {
             background-color: #e9ecef;
+        }
+    }
+}
+
+/* Responsive Styles */
+
+/* Tablets y pantallas medianas (768px - 991px) */
+@media (max-width: 991px) {
+    .upload-container {
+        max-width: 500px;
+        padding: 18px;
+    }
+
+    .wedding-header {
+        h1 {
+            font-size: 26px;
+        }
+
+        p {
+            font-size: 15px;
+        }
+    }
+
+    .upload-form {
+        .preview-container {
+            .file-preview {
+                max-height: 250px;
+            }
+        }
+    }
+}
+
+/* Móviles grandes (481px - 767px) */
+@media (max-width: 767px) {
+    .upload-container {
+        max-width: 100%;
+        padding: 15px;
+        margin: 0 10px;
+    }
+
+    .wedding-header {
+        margin-bottom: 25px;
+
+        h1 {
+            font-size: 24px;
+        }
+
+        p {
+            font-size: 14px;
+        }
+    }
+
+    .app-footer {
+        display: block;
+        margin-top: 0px;
+        text-align: center;
+        color: #888;
+        margin-top: 10px;
+        position: relative; // Para que esté encima del ::before
+        z-index: 1;
+    
+        p {
+            font-size: 13px;
+            margin-bottom: 0px;
+        }
+    
+        .hearts {
+            span {
+                color: #d48166;
+                margin: 0 5px;
+                font-size: 13px;
+                display: inline-block;
+                animation: beat 1.5s infinite alternate;
+    
+                &:nth-child(2) {
+                    animation-delay: 0.2s;
+                }
+    
+                &:nth-child(3) {
+                    animation-delay: 0.4s;
+                }
+            }
+        }
+    }
+
+    .upload-form {
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-control {
+            padding: 10px 12px;
+            font-size: 15px;
+        }
+
+        .file-input-label {
+            padding: 10px 12px;
+            font-size: 15px;
+        }
+
+        .preview-container {
+            margin: 15px 0;
+
+            .file-preview {
+                max-height: 200px;
+            }
+        }
+
+        .success-message {
+            font-size: 15px;
+            padding: 12px;
+        }
+
+        .button-container {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .submit-button,
+        .reset-button {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 15px;
+        }
+    }
+}
+
+/* Móviles pequeños (320px - 480px) */
+@media (max-width: 480px) {
+    .upload-container {
+        padding: 12px;
+        margin: 0 5px;
+        border-radius: 8px;
+    }
+
+    .wedding-header {
+        margin-bottom: 10px;
+
+        h1 {
+            font-size: 22px;
+            margin-bottom: 0px;
+        }
+
+        p {
+            font-size: 13px;
+        }
+    }    
+
+    .upload-form {
+        .form-group {
+            margin-bottom: 10px;
+
+            label {
+                font-size: 13px;
+            }
+        }
+
+        label {
+            margin-bottom: 0px;
+        }
+
+        .form-control {
+            padding: 8px 10px;
+            font-size: 13px;
+        }
+
+        .file-input-label {
+            padding: 8px 10px;
+            font-size: 13px;
+        }
+
+        .preview-container {
+            margin: 12px 0;
+
+            .file-preview {
+                max-height: 180px;
+            }
+        }
+
+        .error-message {
+            font-size: 13px;
+            padding: 8px;
+        }
+
+        .success-message {
+            font-size: 13px;
+            padding: 10px;
+
+            .success-icon {
+                width: 20px;
+                height: 20px;
+                line-height: 20px;
+                margin-right: 8px;
+            }
+        }
+
+        .button-container {
+            gap: 5px;
+            margin-top: 0px;
+        }
+
+        .progress-container {
+            height: 6px;
+            margin: 12px 0;
+
+            .progress-bar {
+                line-height: 6px;
+                font-size: 9px;
+            }
+        }
+
+        .submit-button,
+        .reset-button {
+            padding: 10px 16px;
+            font-size: 13px;
+        }
+    }
+}
+
+/* Móviles muy pequeños (menos de 320px) */
+@media (max-width: 319px) {
+    .upload-container {
+        padding: 10px;
+        margin: 0 3px;
+    }
+
+    .wedding-header {
+        h1 {
+            font-size: 20px;
+        }
+
+        p {
+            font-size: 12px;
+        }
+    }
+
+    .upload-form {
+        .form-control,
+        .file-input-label {
+            padding: 6px 8px;
+            font-size: 13px;
+        }
+
+        .preview-container {
+            .file-preview {
+                max-height: 150px;
+            }
+        }
+
+        .submit-button,
+        .reset-button {
+            padding: 8px 12px;
+            font-size: 13px;
         }
     }
 }

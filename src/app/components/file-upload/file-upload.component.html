@@ -7,7 +7,7 @@
     <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" class="upload-form">
         <!-- Nombre del invitado -->
         <div class="form-group">
-            <label for="guestName">Tu nombre</label>
+            <label for="guestName">Tu nombre:</label>
             <input type="text" id="guestName" formControlName="guestName" placeholder="Escribe tu nombre"
                 class="form-control">
             <div *ngIf="uploadForm.get('guestName')?.invalid && uploadForm.get('guestName')?.touched"
@@ -62,4 +62,13 @@
             </button>
         </div>
     </form>
+
+    <footer class="app-footer">
+        <p>Gracias por ser parte de este día especial</p>
+        <div class="hearts">
+            <span>❤</span>
+            <span>❤</span>
+            <span>❤</span>
+        </div>
+    </footer>
 </div>
