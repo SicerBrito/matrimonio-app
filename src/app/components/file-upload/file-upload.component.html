@@ -16,44 +16,99 @@
             </div>
         </div>
 
-        <!-- Selector de archivo -->
+        <!-- Selector de archivos múltiples -->
         <div class="form-group file-input-container">
-            <label for="file" class="file-input-label">
-                <span *ngIf="!selectedFile">Selecciona una foto o video</span>
-                <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
+            <label for="files" class="file-input-label">
+                <span *ngIf="selectedFiles.length === 0">Selecciona fotos y videos</span>
+                <span *ngIf="selectedFiles.length === 1">1 archivo seleccionado</span>
+                <span *ngIf="selectedFiles.length > 1">{{ selectedFiles.length }} archivos seleccionados</span>
+                <small class="file-limit-info">Máximo {{ MAX_FILES }} archivos, 1GB cada uno</small>
             </label>
-            <input type="file" id="file" (change)="onFileSelected($event)" accept=".jpg,.jpeg,.png,.mp4,.mov"
+            <input type="file" id="files" (change)="onFilesSelected($event)" 
+                accept=".jpg,.jpeg,.png,.mp4,.mov" multiple
                 class="file-input" #fileInput>
         </div>
 
-        <!-- Previsualización del archivo -->
-        <div *ngIf="previewUrl" class="preview-container">
-            <img *ngIf="!isVideo" [src]="previewUrl" alt="Preview" class="file-preview">
-            <video *ngIf="isVideo" [src]="previewUrl" controls class="file-preview"></video>
+        <!-- Lista de archivos seleccionados -->
+        <div *ngIf="selectedFiles.length > 0" class="selected-files-container">
+            <div class="selected-files-header">
+                <h3>Archivos seleccionados:</h3>
+                <button type="button" class="remove-all-btn" (click)="removeAllFiles()" 
+                    [disabled]="isUploading" title="Remover todos los archivos">
+                    🗑️ Limpiar todo
+                </button>
+            </div>
+
+            <div class="files-grid">
+                <div *ngFor="let fileItem of selectedFiles" class="file-item" [ngClass]="getFileStatusClass(fileItem)">
+                    <!-- Previsualización -->
+                    <div class="file-preview-container">
+                        <img *ngIf="!fileItem.isVideo && fileItem.previewUrl" 
+                            [src]="fileItem.previewUrl" alt="Preview" class="file-preview">
+                        <video *ngIf="fileItem.isVideo && fileItem.previewUrl" 
+                            [src]="fileItem.previewUrl" class="file-preview" muted></video>
+                        <div *ngIf="!fileItem.previewUrl" class="file-preview-placeholder">
+                            <span>{{ fileItem.isVideo ? '🎥' : '🖼️' }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Información del archivo -->
+                    <div class="file-info">
+                        <div class="file-name" [title]="fileItem.file.name">
+                            <span class="file-status-icon">{{ getFileStatusIcon(fileItem) }}</span>
+                            {{ fileItem.file.name }}
+                        </div>
+                        <div class="file-size">
+                            {{ (fileItem.file.size / 1024 / 1024) | number:'1.1-1' }} MB
+                        </div>
+                        
+                        <!-- Progreso individual del archivo -->
+                        <div *ngIf="fileItem.uploadStatus === 'uploading'" class="file-progress">
+                            <div class="progress-bar-small">
+                                <div class="progress-fill" [style.width.%]="fileItem.uploadProgress"></div>
+                            </div>
+                            <span class="progress-text">{{ fileItem.uploadProgress }}%</span>
+                        </div>
+
+                        <!-- Error específico del archivo -->
+                        <div *ngIf="fileItem.uploadError" class="file-error">
+                            {{ fileItem.uploadError }}
+                        </div>
+                    </div>
+
+                    <!-- Botón para remover archivo individual -->
+                    <button type="button" class="remove-file-btn" (click)="removeFile(fileItem.id)"
+                        [disabled]="isUploading" title="Remover archivo">
+                        ✕
+                    </button>
+                </div>
+            </div>
         </div>
 
-        <!-- Mensajes de error -->
+        <!-- Mensajes de error globales -->
         <div *ngIf="uploadError" class="error-message">
             {{ uploadError }}
         </div>
 
-        <!-- Progreso de carga -->
+        <!-- Progreso global de carga -->
         <div *ngIf="isUploading" class="progress-container">
-            <div class="progress-bar" [style.width.%]="uploadProgress">
-                {{ uploadProgress }}%
+            <div class="progress-label">Subiendo archivos...</div>
+            <div class="progress-bar" [style.width.%]="globalUploadProgress">
+                {{ globalUploadProgress }}%
             </div>
         </div>
 
         <!-- Mensaje de éxito -->
-        <div *ngIf="uploadSuccess" class="success-message">
+        <div *ngIf="allFilesUploaded" class="success-message">
             <span class="success-icon">✓</span>
-            ¡Archivo subido con éxito! Gracias por compartirlo.
+            ¡Todos los archivos se subieron con éxito! Gracias por compartirlos.
         </div>
 
         <!-- Botones de acción -->
         <div class="button-container">
-            <button type="submit" class="submit-button" [disabled]="uploadForm.invalid || !selectedFile || isUploading">
-                <span *ngIf="!isUploading">Subir archivo</span>
+            <button type="submit" class="submit-button" 
+                [disabled]="uploadForm.invalid || selectedFiles.length === 0 || isUploading">
+                <span *ngIf="!isUploading">Subir {{ selectedFiles.length }} archivo(s)</span>
                 <span *ngIf="isUploading">Subiendo...</span>
             </button>
 
