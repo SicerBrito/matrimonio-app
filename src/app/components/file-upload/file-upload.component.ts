@@ -42,7 +42,6 @@ export class FileUploadComponent implements OnInit {
     // private metadataService: MetadataService
   ) {
     this.uploadForm = this.fb.group({
-      guestName: ['', [Validators.required, Validators.minLength(2)]],
       files: [null, [Validators.required]]
     });
   }
@@ -184,9 +183,7 @@ export class FileUploadComponent implements OnInit {
     if (this.uploadForm.invalid || this.selectedFiles.length === 0) {
       return;
     }
-    
-    const guestName = this.uploadForm.get('guestName')?.value;
-    
+        
     // Iniciar la subida
     this.isUploading = true;
     this.globalUploadProgress = 0;
@@ -201,13 +198,13 @@ export class FileUploadComponent implements OnInit {
     });
     
     // Subir archivos secuencialmente (puedes cambiar a paralelo si prefieres)
-    this.uploadFilesSequentially(guestName, 0);
+    this.uploadFilesSequentially(0);
   }
 
   /**
    * Sube los archivos de forma secuencial
    */
-  private uploadFilesSequentially(guestName: string, index: number): void {
+  private uploadFilesSequentially(index: number): void {
     if (index >= this.selectedFiles.length) {
       // Todos los archivos han sido procesados
       this.isUploading = false;
@@ -239,7 +236,6 @@ export class FileUploadComponent implements OnInit {
             
             // Guardar los metadatos
             const metadata: FileMetadata = {
-              guestName,
               fileName: currentFile.file.name,
               fileType: currentFile.file.type,
               fileSize: currentFile.file.size,
@@ -264,7 +260,7 @@ export class FileUploadComponent implements OnInit {
             // });
             
             // Mientras tanto, continuar con el siguiente archivo
-            this.uploadFilesSequentially(guestName, index + 1);
+            this.uploadFilesSequentially(index + 1);
           }
         },
         error: (error: HttpErrorResponse) => {
@@ -272,7 +268,7 @@ export class FileUploadComponent implements OnInit {
           currentFile.uploadStatus = 'error';
           
           // Continuar con el siguiente archivo
-          this.uploadFilesSequentially(guestName, index + 1);
+          this.uploadFilesSequentially(index + 1);
         }
       });
   }
@@ -280,7 +276,7 @@ export class FileUploadComponent implements OnInit {
   /**
    * Sube los archivos en paralelo (alternativa)
    */
-  private uploadFilesInParallel(guestName: string): void {
+  private uploadFilesInParallel(): void {
     let completedUploads = 0;
     
     this.selectedFiles.forEach((fileWithPreview) => {

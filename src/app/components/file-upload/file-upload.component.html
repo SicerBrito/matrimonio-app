@@ -5,17 +5,6 @@
     </header>
 
     <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" class="upload-form">
-        <!-- Nombre del invitado -->
-        <div class="form-group">
-            <label for="guestName">Tu nombre:</label>
-            <input type="text" id="guestName" formControlName="guestName" placeholder="Escribe tu nombre"
-                class="form-control">
-            <div *ngIf="uploadForm.get('guestName')?.invalid && uploadForm.get('guestName')?.touched"
-                class="error-message">
-                Por favor, escribe tu nombre
-            </div>
-        </div>
-
         <!-- Selector de archivos múltiples -->
         <div class="form-group file-input-container">
             <label for="files" class="file-input-label">
