@@ -1,8 +1,8 @@
 export const environment = {
     production: false,
     bunnyStorage: {
-        storageZoneName: 'c1a77494-a7fb-4a87-9ee7270547be-8de7-4696',
-        accessKey: 'TU_ACCESS_KEY',
+        storageZoneName: 'corestorageahdo',
+        apiKey: 'f99c5fc7-b396-4125-9382c2f05826-0ca4-45cb',
         endpoint: 'https://storage.bunnycdn.com',
         region: '' // Deja vacío para la región por defecto, o usa 'de', 'uk', etc.
     },

@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BunnyStorageService } from '../../services/bunny-storage.service';
-// import { MetadataService } from '../../services/metadata.service';
-import { FileMetadata } from '../../models/file-metadata.model';
 
 interface FileWithPreview {
   file: File;
@@ -38,8 +36,7 @@ export class FileUploadComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private bunnyStorage: BunnyStorageService,
-    // private metadataService: MetadataService
+    private bunnyStorage: BunnyStorageService
   ) {
     this.uploadForm = this.fb.group({
       files: [null, [Validators.required]]
@@ -197,7 +194,7 @@ export class FileUploadComponent implements OnInit {
       file.uploadError = undefined;
     });
     
-    // Subir archivos secuencialmente (puedes cambiar a paralelo si prefieres)
+    // Subir archivos secuencialmente
     this.uploadFilesSequentially(0);
   }
 
@@ -223,7 +220,7 @@ export class FileUploadComponent implements OnInit {
     currentFile.uploadStatus = 'uploading';
     
     // Subir al Storage Zone
-    this.bunnyStorage.uploadFile(currentFile.file, 'matrimonio-fotos')
+    this.bunnyStorage.uploadFileToStorage(currentFile.file, currentFile.file.name, 'wedding')
       .subscribe({
         next: (result) => {
           // Actualizar el progreso del archivo actual
@@ -234,32 +231,7 @@ export class FileUploadComponent implements OnInit {
           if (result.progress === 100 && result.url) {
             currentFile.uploadStatus = 'success';
             
-            // Guardar los metadatos
-            const metadata: FileMetadata = {
-              fileName: currentFile.file.name,
-              fileType: currentFile.file.type,
-              fileSize: currentFile.file.size,
-              publicUrl: result.url,
-              timestamp: new Date()
-            };
-            
-            // this.metadataService.saveMetadata(metadata).subscribe({
-            //   next: (success) => {
-            //     if (!success) {
-            //       currentFile.uploadError = 'Error al guardar metadatos';
-            //       currentFile.uploadStatus = 'error';
-            //     }
-            //     // Continuar con el siguiente archivo
-            //     this.uploadFilesSequentially(guestName, index + 1);
-            //   },
-            //   error: (err) => {
-            //     currentFile.uploadError = 'Error al guardar metadatos';
-            //     currentFile.uploadStatus = 'error';
-            //     this.uploadFilesSequentially(guestName, index + 1);
-            //   }
-            // });
-            
-            // Mientras tanto, continuar con el siguiente archivo
+            // Continuar con el siguiente archivo
             this.uploadFilesSequentially(index + 1);
           }
         },
@@ -271,52 +243,6 @@ export class FileUploadComponent implements OnInit {
           this.uploadFilesSequentially(index + 1);
         }
       });
-  }
-
-  /**
-   * Sube los archivos en paralelo (alternativa)
-   */
-  private uploadFilesInParallel(): void {
-    let completedUploads = 0;
-    
-    this.selectedFiles.forEach((fileWithPreview) => {
-      fileWithPreview.uploadStatus = 'uploading';
-      
-      this.bunnyStorage.uploadFile(fileWithPreview.file, 'matrimonio-fotos')
-        .subscribe({
-          next: (result) => {
-            fileWithPreview.uploadProgress = result.progress;
-            this.calculateGlobalProgress();
-            
-            if (result.progress === 100 && result.url) {
-              fileWithPreview.uploadStatus = 'success';
-              completedUploads++;
-              
-              // Verificar si todos los archivos han terminado
-              if (completedUploads === this.selectedFiles.length) {
-                this.isUploading = false;
-                this.allFilesUploaded = this.selectedFiles.every(f => f.uploadStatus === 'success');
-                
-                if (this.allFilesUploaded) {
-                  setTimeout(() => {
-                    this.resetForm();
-                  }, 3000);
-                }
-              }
-            }
-          },
-          error: (error: HttpErrorResponse) => {
-            fileWithPreview.uploadError = error.message || 'Error al subir archivo';
-            fileWithPreview.uploadStatus = 'error';
-            completedUploads++;
-            
-            if (completedUploads === this.selectedFiles.length) {
-              this.isUploading = false;
-              this.allFilesUploaded = this.selectedFiles.every(f => f.uploadStatus === 'success');
-            }
-          }
-        });
-    });
   }
 
   /**
