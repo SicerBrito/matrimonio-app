@@ -11,7 +11,7 @@
                 <span *ngIf="selectedFiles.length === 0">Selecciona fotos y videos</span>
                 <span *ngIf="selectedFiles.length === 1">1 archivo seleccionado</span>
                 <span *ngIf="selectedFiles.length > 1">{{ selectedFiles.length }} archivos seleccionados</span>
-                <small class="file-limit-info">Máximo {{ MAX_FILES }} archivos, 1GB cada uno</small>
+                <small class="file-limit-info">Máximo {{ MAX_FILES }} archivos, 5GB cada uno</small>
             </label>
             <input type="file" id="files" (change)="onFilesSelected($event)" 
                 accept=".jpg,.jpeg,.png,.mp4,.mov" multiple
