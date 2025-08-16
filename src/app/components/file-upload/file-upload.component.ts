@@ -37,8 +37,8 @@ export class FileUploadComponent implements OnInit {
 
   // Configuración de compresión
   readonly COMPRESS_IMAGES = true;
-  readonly MAX_IMAGE_WIDTH = 1920;
-  readonly IMAGE_QUALITY = 0.85;
+  readonly MAX_IMAGE_WIDTH = 2560;
+  readonly IMAGE_QUALITY = 0.90;
 
   constructor(
     private fb: FormBuilder,
@@ -95,7 +95,7 @@ export class FileUploadComponent implements OnInit {
       let compressed = false;
 
       // Comprimir imágenes si está habilitado
-      if (this.COMPRESS_IMAGES && file.type.startsWith('image/')) {
+      if (this.COMPRESS_IMAGES && file.type.startsWith('image/') && file.size > 2 * 1024 * 1024) {
         try {
           processedFile = await this.bunnyStorage.compressImage(
             file, 
